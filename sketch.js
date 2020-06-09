@@ -4,15 +4,15 @@ const Bodies = Matter.Bodies;
 const Constraint = Matter.Constraint;
 
 function setup() {
-  var canvas = createCanvas(800,400);
+  var canvas = createCanvas(displayWidth,400);
   engine = Engine.create();
   world = engine.world;
   
-  ground = new Ground(400,height,800,20);
+  ground = new Ground(displayWidth/2,height,displayWidth,20);
   stand = new Ground(400, 355, 300, 10);
 
-  ball = new Ball(100, 300, 15);
-  slingshot = new SlingShot(ball.body, {x:100, y:300});
+  ball = new Ball(150, 300, 15);
+  slingshot = new SlingShot(ball.body, {x:150, y:300});
 
   block1 = new Block(280, 330, 40, 40, choose());
   block2 = new Block(340, 330, 40, 40, choose());
@@ -29,20 +29,20 @@ function setup() {
   block13 = new Block(370, 210, 40, 40, choose());
   block14 = new Block(430, 210, 40, 40, choose());
   block15 = new Block(400, 170, 40, 40, choose());
-  block16 = new Block(700, 140, 40, 40, choose());
-  block17 = new Block(700, 100, 40, 40, choose());
-  block18 = new Block(700, 50, 40, 40, choose());
-  block19 = new Block(700, 0, 40, 40, choose());  
-  block20 = new Block(700, -50, 40, 40, choose());
-  block21 = new Block(700, -100, 40, 40, choose());
-  block22 = new Block(700, -150, 40, 40, choose());
-  block23 = new Block(650, 140, 40, 40, choose());
-  block24 = new Block(650, 100, 40, 40, choose());
-  block25 = new Block(650, 50, 40, 40, choose());
-  block26 = new Block(650, 0, 40, 40, choose());  
-  block27 = new Block(650, -50, 40, 40, choose());
-  block28 = new Block(650, -100, 40, 40, choose());
-  block29 = new Block(650, -150, 40, 40, choose());
+  block16 = new Block(700, 370, 40, 40, choose());
+  block17 = new Block(700, 330, 40, 40, choose());
+  block18 = new Block(700, 290, 40, 40, choose());
+  block19 = new Block(700, 250, 40, 40, choose());  
+  block20 = new Block(700, 210, 40, 40, choose());
+  block21 = new Block(700, 170, 40, 40, choose());
+  block22 = new Block(700, 130, 40, 40, choose());
+  block23 = new Block(650, 370, 40, 40, choose());
+  block24 = new Block(650, 330, 40, 40, choose());
+  block25 = new Block(650, 290, 40, 40, choose());
+  block26 = new Block(650, 250, 40, 40, choose());  
+  block27 = new Block(650, 210, 40, 40, choose());
+  block28 = new Block(650, 170, 40, 40, choose());
+  block29 = new Block(650, 130, 40, 40, choose());
 }
 
 function draw() {
@@ -51,7 +51,7 @@ function draw() {
   fill("#f54f49");
   textSize(50);
   textFont("Impact");
-  text("Destroy!", 310, 100);
+  text("Destroy!", displayWidth/2 - 90, 100);
 
   ground.display();
   stand.display();
@@ -118,4 +118,12 @@ function choose(){
     color = ("orange");
   }
   return(color);
+}
+
+function keyPressed(){
+  if(keyCode===32 && ball.body.speed < 3){
+    Matter.Body.setAngle(ball.body, 0);
+    Matter.Body.setPosition(ball.body, {x: 150 , y: 300});
+    slingshot.attach(ball.body);
+  }
 }
