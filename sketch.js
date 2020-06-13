@@ -3,12 +3,22 @@ const World = Matter.World;
 const Bodies = Matter.Bodies;
 const Constraint = Matter.Constraint;
 
+var score = 0;
+var backgroundImg;
+
+function preload() {
+  getBGImage();
+}
+
 function setup() {
-  var canvas = createCanvas(displayWidth,400);
+  var canvas = createCanvas(1200,400);
   engine = Engine.create();
   world = engine.world;
+
+  score_title = createElement("h3");
+  title = createElement("h3");
   
-  ground = new Ground(displayWidth/2,height,displayWidth,20);
+  ground = new Ground(600,height,1200,20);
   stand = new Ground(400, 355, 300, 10);
 
   ball = new Ball(150, 300, 15);
@@ -46,17 +56,28 @@ function setup() {
 }
 
 function draw() {
-  background("lightgray");
-  Engine.update(engine);
-  fill("#f54f49");
-  textSize(50);
-  textFont("Impact");
-  text("Destroy!", displayWidth/2 - 90, 100);
+  if(backgroundImg){
+    background(backgroundImg);
+  }
 
+  Engine.update(engine);
+
+  title.html("Destroy!");
+  title.elt.id = "destroy";
+  title.position(525, 10);
+
+  score_title.html("Score: " + score);
+  score_title.elt.id = "title";
+  score_title.position(535, -10);
+
+  if(score>200){
+    title.elt.id = "destroyed";
+  }
+  
   ground.display();
   stand.display();
 
-  block1.display();
+  block1.display();  
   block2.display();
   block3.display();
   block4.display();
@@ -85,6 +106,36 @@ function draw() {
   block27.display();
   block28.display();
   block29.display();
+
+  block1.score();
+  block2.score();
+  block3.score();
+  block4.score();
+  block5.score();
+  block6.score();
+  block7.score();
+  block8.score();
+  block9.score();
+  block10.score();
+  block11.score();
+  block12.score();
+  block13.score();
+  block14.score();
+  block15.score();
+  block16.score();
+  block17.score();
+  block18.score();
+  block19.score();
+  block20.score();
+  block21.score();
+  block22.score();
+  block23.score();
+  block24.score();
+  block25.score();
+  block26.score();
+  block27.score();
+  block28.score();
+  block29.score();
   
   slingshot.display();
   ball.display();
@@ -93,7 +144,6 @@ function draw() {
 function mouseDragged(){
   Matter.Body.setPosition(ball.body, {x: mouseX , y: mouseY});
 }
-
 
 function mouseReleased(){
   slingshot.fly();
@@ -125,5 +175,19 @@ function keyPressed(){
     Matter.Body.setAngle(ball.body, 0);
     Matter.Body.setPosition(ball.body, {x: 150 , y: 300});
     slingshot.attach(ball.body);
+  }
+}
+
+async function getBGImage(){
+  var response = await fetch("http://worldtimeapi.org/api/timezone/Asia/Kolkata");
+  var responseJSON = await response.json();
+  var datetime = responseJSON.datetime;
+  var hour = datetime.slice(11,13);
+
+  if(hour>=6 && hour<=18){
+    backgroundImg = loadImage("day.jpg");
+  }
+  else{
+    backgroundImg = loadImage("night1.jpg");
   }
 }
