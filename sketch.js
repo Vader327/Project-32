@@ -188,6 +188,6 @@ async function getBGImage(){
     backgroundImg = loadImage("day.jpg");
   }
   else{
-    backgroundImg = loadImage("night1.jpg");
+    backgroundImg = loadImage("night.jpg");
   }
 }
